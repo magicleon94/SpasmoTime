@@ -5,8 +5,11 @@ public class Constants {
     //messaggio da mandare in broadcast, probabilmente è inutile
     public static final String BROADCAST_ACTION = "com.tomorrow.magicleon.spasmotime.BROADCAST";
 
-    //messaggio da sparare con l'alarm
-    public static final String ALARM_ACTION = "com.tomorrow.magicleon.spasmotime.ALARM";
+    //messaggio da sparare con l'alarm per i palindromi
+    public static final String ALARM_ACTION_PALINDROM = "com.tomorrow.magicleon.spasmotime.ALARM_PALINDROM";
+
+    //messaggio da sparare con l'alarm per i simmetrici
+    public static final String ALARM_ACTION_SYMMETRIC = "com.tomorrow.magicleon.spasmotime.ALARM_SYMMETRIC";
 
     //avvia il service, probabilmente è inutile
     public static final String SERVICE_START_ACTION = "com.tomorrow.magicleon.spasmotime.START_SERVICE";
