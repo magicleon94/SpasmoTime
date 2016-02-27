@@ -25,7 +25,8 @@
             android:label="Lullo Receiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.tomorrow.magicleon.spasmotime.ALARM"/>
+                <action android:name="com.tomorrow.magicleon.spasmotime.ALARM_PALINDROM"/>
+                <action android:name="com.tomorrow.magicleon.spasmotime.ALARM_SYMMETRIC"/>
             </intent-filter>
         </receiver>
 

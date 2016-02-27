@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">SpasmoTime</string>
     <string name="orari_palindromi">Orari palindromi</string>
-    <string name="orari_simmetrici">Orari Simmetrici</string>
+    <string name="orari_simmetrici">Orari simmetrici</string>
+    <string name="sharedPreferencePalindromEnabledKey">com.tomorrow.magicleon.spasmotime.PALINDROM_ENABLED_KEY</string>
+    <string name="sharedPreferenceSymmetricEnabledKey">com.tomorrow.magicleon.spasmotime.SYMMETRIC_ENABLED_KEY</string>
+    <string name="sharedPreferences">com.tomorrow.magicleon.spasmotime.SHARED_PREFERENCES_FILE</string>
 </resources>
