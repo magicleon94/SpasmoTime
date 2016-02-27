@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SpasmoTime</string>
+    <string name="orari_palindromi">Orari palindromi</string>
+    <string name="orari_simmetrici">Orari Simmetrici</string>
+</resources>
