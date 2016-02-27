@@ -17,15 +17,25 @@
             </intent-filter>
         </activity>
 
-
-        <service android:name=".CountService"
+        <service android:name=".updateAlarmsService"
             android:exported="true"/>
+
         <receiver android:name=".AlarmReceiver"
             android:enabled="true"
             android:label="Lullo Receiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.tomorrow.magicleon.spasmotime.ALARM"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".ServiceStatusReceiver"
+            android:enabled="true"
+            android:label="Service Status Receiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.tomorrow.magicleon.spasmotime.STATUS_OK"/>
+                <action android:name="com.tomorrow.magicleon.spasmotime.STATUS_NOT_OK"/>
             </intent-filter>
         </receiver>
     </application>
