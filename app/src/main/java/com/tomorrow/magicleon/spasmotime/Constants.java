@@ -1,8 +1,5 @@
 package com.tomorrow.magicleon.spasmotime;
 
-/**
- * Created by magicleon on 23/02/16.
- */
 public class Constants {
 
     //messaggio da mandare in broadcast, probabilmente è inutile

@@ -1,21 +1,10 @@
 package com.tomorrow.magicleon.spasmotime;
 
 import android.app.IntentService;
-import android.app.Service;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.SystemClock;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import java.sql.Time;
-
-/**
- * Created by magicleon on 23/02/16.
- */
 public class updateAlarmsService extends IntentService {
-    boolean looping = true;
     private final String TAG = getPackageName();
     public updateAlarmsService(){
         super("LulloService");
