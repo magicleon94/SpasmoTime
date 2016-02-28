@@ -10,19 +10,21 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("AlarmReceiver","ricevuto");
+        Log.d("AlarmReceiver","ricevuto " + intent.getAction());
         Calendar calendar = Calendar.getInstance();
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
         mBuilder.setSmallIcon(R.drawable.ic_flag_black_24dp);
         mBuilder.setContentTitle("Un nuovo orario spastico è giunto!");
-        mBuilder.setContentText(intent.getStringExtra(String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(calendar.get(Calendar.MINUTE))));
-
+//        mBuilder.setContentText(intent.getStringExtra(String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(calendar.get(Calendar.MINUTE))));
+        mBuilder.setContentText(new SimpleDateFormat("HH:mm").format(new Date()));
         Intent notifIntent = new Intent(context,MainActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addParentStack(MainActivity.class);
