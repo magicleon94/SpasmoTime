@@ -16,7 +16,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
     public class updateAlarmsService extends IntentService {
         private final String TAG = updateAlarmsService.class.getSimpleName();
-        private AtomicInteger id = new AtomicInteger();
         public updateAlarmsService(){
         super("LulloService");
         }
@@ -26,31 +25,35 @@ import java.util.concurrent.atomic.AtomicInteger;
 
         boolean palindromi = intent.getBooleanExtra(Constants.SWITCH_PALINDROMS_EXTRA,false);
         boolean simmetrici = intent.getBooleanExtra(Constants.SWITCH_SYMMETRIC_EXTRA,false);
-        Calendar spasmoTime = Calendar.getInstance();
+        Calendar spasmoTime;
+
         Log.d(TAG,"Palindromi: " + String.valueOf(palindromi));
         Log.d(TAG,"Simmetrici: " + String.valueOf(simmetrici));
         AlarmManager alarmManager = ((AlarmManager) getApplicationContext().getSystemService(ALARM_SERVICE));
-        spasmoTime.set(Calendar.SECOND,0);
 
         try {
             if (palindromi) {
                 Intent palindroIntent = new Intent(Constants.ALARM_ACTION_PALINDROM);
                 clearAlarmFor(alarmManager,Constants.ALARM_ACTION_PALINDROM);
 
+                spasmoTime = Calendar.getInstance();
+                spasmoTime.set(Calendar.SECOND,0);
                 for(int i=0; i<24; i++){
-//                    Log.d(TAG,"i=" + String.valueOf(i));
                     if(i<6 || (i>=10 && i<=15)  || i>=20) {
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), i, palindroIntent, 0);
                         spasmoTime.set(Calendar.HOUR_OF_DAY, i);
                         spasmoTime.set(Calendar.MINUTE, reverseInt(i));
 
                         if(spasmoTime.getTimeInMillis()<System.currentTimeMillis()){
-                            Log.d(TAG,"Timer is in the past, adding one day, i = " + String.valueOf(i));
-                            spasmoTime.roll(Calendar.DAY_OF_MONTH,1);
+//                            Log.d(TAG,"palindromo antecedente!");
+                            spasmoTime.add(Calendar.DAY_OF_MONTH,1);
+                            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+                            Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
+                            spasmoTime.add(Calendar.DAY_OF_MONTH,-1);
+                        }else{
+                            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+                            Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
                         }
-                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-//                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), pendingIntent);
-                        Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND));
                     }
                 }
             }
@@ -60,23 +63,25 @@ import java.util.concurrent.atomic.AtomicInteger;
 
                 Intent symmetricIntent = new Intent(Constants.ALARM_ACTION_SYMMETRIC);
                 clearAlarmFor(alarmManager,Constants.ALARM_ACTION_SYMMETRIC);
+                spasmoTime = Calendar.getInstance();
+                spasmoTime.set(Calendar.SECOND,0);
 
                 for(int i=0; i<24; i++){
-//                    Log.d(TAG,"i=" + String.valueOf(i));
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), i, symmetricIntent, 0);
                     spasmoTime.set(Calendar.HOUR_OF_DAY,i);
                     spasmoTime.set(Calendar.MINUTE,i);
 
                     if(spasmoTime.getTimeInMillis()<System.currentTimeMillis()){
-                        Log.d(TAG,"Timer is in the past, adding one day, i = " + String.valueOf(i));
-                        spasmoTime.roll(Calendar.DAY_OF_MONTH,1);
+//                        Log.d(TAG,"simmetrico antecedente!");
+                        spasmoTime.add(Calendar.DAY_OF_MONTH,1);
+                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,spasmoTime.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+                        Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
+                        spasmoTime.add(Calendar.DAY_OF_MONTH,-1);
+                    }else{
+                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,spasmoTime.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+                        Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
                     }
-
-                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,spasmoTime.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
-//                    alarmManager.setExact(AlarmManager.RTC_WAKEUP,spasmoTime.getTimeInMillis(),pendingIntent);
-                    Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND));
                 }
-
             }
 
 
@@ -114,11 +119,15 @@ import java.util.concurrent.atomic.AtomicInteger;
         //12345
         private int reverseInt (int input){
             int reversedInput = 0;
-            int last_digit;
-            while (input != 0) {
-                last_digit = input%10;
-                reversedInput = reversedInput * 10 + last_digit;
-                input = input / 10;
+            if(Math.abs(input)>=10) {
+                int last_digit;
+                while (input != 0) {
+                    last_digit = input % 10;
+                    reversedInput = reversedInput * 10 + last_digit;
+                    input = input / 10;
+                }
+            }else{
+                reversedInput = input*10;
             }
             return  reversedInput;
         }

@@ -27,6 +27,7 @@
             <intent-filter>
                 <action android:name="com.tomorrow.magicleon.spasmotime.ALARM_PALINDROM"/>
                 <action android:name="com.tomorrow.magicleon.spasmotime.ALARM_SYMMETRIC"/>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
             </intent-filter>
         </receiver>
 
