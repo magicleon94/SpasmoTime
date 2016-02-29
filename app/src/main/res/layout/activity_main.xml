@@ -25,9 +25,22 @@
     <Switch
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/orari_simmetrici"
+        android:text="@string/orari_doppi"
         android:textSize="20sp"
-        android:id="@+id/simmetricsSwitch"
+        android:id="@+id/doubleSwitch"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"/>
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/orari_tripli"
+        android:textSize="20sp"
+        android:id="@+id/tripleSwitch"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         />

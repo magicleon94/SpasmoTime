@@ -5,14 +5,10 @@ import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.util.Calendar;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.atomic.AtomicInteger;
 
     public class updateAlarmsService extends IntentService {
         private final String TAG = updateAlarmsService.class.getSimpleName();
@@ -24,11 +20,11 @@ import java.util.concurrent.atomic.AtomicInteger;
     protected void onHandleIntent(Intent intent) {
 
         boolean palindromi = intent.getBooleanExtra(Constants.SWITCH_PALINDROMS_EXTRA,false);
-        boolean simmetrici = intent.getBooleanExtra(Constants.SWITCH_SYMMETRIC_EXTRA,false);
+        boolean doppi = intent.getBooleanExtra(Constants.SWITCH_SYMMETRIC_EXTRA,false);
         Calendar spasmoTime;
 
         Log.d(TAG,"Palindromi: " + String.valueOf(palindromi));
-        Log.d(TAG,"Simmetrici: " + String.valueOf(simmetrici));
+        Log.d(TAG,"Doppi: " + String.valueOf(doppi));
         AlarmManager alarmManager = ((AlarmManager) getApplicationContext().getSystemService(ALARM_SERVICE));
 
         try {
@@ -45,7 +41,6 @@ import java.util.concurrent.atomic.AtomicInteger;
                         spasmoTime.set(Calendar.MINUTE, reverseInt(i));
 
                         if(spasmoTime.getTimeInMillis()<System.currentTimeMillis()){
-//                            Log.d(TAG,"palindromo antecedente!");
                             spasmoTime.add(Calendar.DAY_OF_MONTH,1);
                             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
                             Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
@@ -59,20 +54,19 @@ import java.util.concurrent.atomic.AtomicInteger;
             }
 
 
-            if (simmetrici) {
+            if (doppi) {
 
-                Intent symmetricIntent = new Intent(Constants.ALARM_ACTION_SYMMETRIC);
-                clearAlarmFor(alarmManager,Constants.ALARM_ACTION_SYMMETRIC);
+                Intent doubleIntent = new Intent(Constants.ALARM_ACTION_DOUBLE);
+                clearAlarmFor(alarmManager,Constants.ALARM_ACTION_DOUBLE);
                 spasmoTime = Calendar.getInstance();
                 spasmoTime.set(Calendar.SECOND,0);
 
                 for(int i=0; i<24; i++){
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), i, symmetricIntent, 0);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), i, doubleIntent, 0);
                     spasmoTime.set(Calendar.HOUR_OF_DAY,i);
                     spasmoTime.set(Calendar.MINUTE,i);
 
                     if(spasmoTime.getTimeInMillis()<System.currentTimeMillis()){
-//                        Log.d(TAG,"simmetrico antecedente!");
                         spasmoTime.add(Calendar.DAY_OF_MONTH,1);
                         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,spasmoTime.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
                         Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
@@ -85,9 +79,9 @@ import java.util.concurrent.atomic.AtomicInteger;
             }
 
 
-            if (!simmetrici) {
-                clearAlarmFor(alarmManager,Constants.ALARM_ACTION_SYMMETRIC);
-                Log.d(TAG, "simmetrici canceled");
+            if (!doppi) {
+                clearAlarmFor(alarmManager,Constants.ALARM_ACTION_DOUBLE);
+                Log.d(TAG, "doppi canceled");
             }
 
 
@@ -100,7 +94,7 @@ import java.util.concurrent.atomic.AtomicInteger;
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(getString(R.string.sharedPreferencePalindromEnabledKey), palindromi);
-            editor.putBoolean(getString(R.string.sharedPreferenceSymmetricEnabledKey), simmetrici);
+            editor.putBoolean(getString(R.string.sharedPreferenceDoubleEnabledKey), doppi);
             editor.commit();
 
         }catch (Exception e){
@@ -116,7 +110,6 @@ import java.util.concurrent.atomic.AtomicInteger;
             super.onDestroy();
             Log.d(TAG,"Destroying service");
         }
-        //12345
         private int reverseInt (int input){
             int reversedInput = 0;
             if(Math.abs(input)>=10) {

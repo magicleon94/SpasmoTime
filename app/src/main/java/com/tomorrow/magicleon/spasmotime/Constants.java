@@ -8,8 +8,8 @@ public class Constants {
     //messaggio da sparare con l'alarm per i palindromi
     public static final String ALARM_ACTION_PALINDROM = "com.tomorrow.magicleon.spasmotime.ALARM_PALINDROM";
 
-    //messaggio da sparare con l'alarm per i simmetrici
-    public static final String ALARM_ACTION_SYMMETRIC = "com.tomorrow.magicleon.spasmotime.ALARM_SYMMETRIC";
+    //messaggio da sparare con l'alarm per i doppi
+    public static final String ALARM_ACTION_DOUBLE = "com.tomorrow.magicleon.spasmotime.ALARM_SYMMETRIC";
 
     //avvia il service, probabilmente è inutile
     public static final String SERVICE_START_ACTION = "com.tomorrow.magicleon.spasmotime.START_SERVICE";

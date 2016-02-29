@@ -26,7 +26,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         if(intent.getAction().equals(Constants.ALARM_ACTION_PALINDROM)){
             tipo="palindromo";
         }
-        if(intent.getAction().equals(Constants.ALARM_ACTION_SYMMETRIC)){
+        if(intent.getAction().equals(Constants.ALARM_ACTION_DOUBLE)){
             tipo="simmetrico";
         }
 
@@ -46,7 +46,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-        mBuilder.addAction(R.drawable.ic_send_black_18dp,"lullifica",pendingIntent);
+        mBuilder.addAction(R.drawable.ic_send_black_18dp,"Condividi",pendingIntent);
 
         mBuilder.setContentIntent(pendingIntent);
         Notification notification = mBuilder.build();
