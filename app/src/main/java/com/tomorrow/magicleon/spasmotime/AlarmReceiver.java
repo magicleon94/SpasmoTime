@@ -35,18 +35,22 @@ public class AlarmReceiver extends BroadcastReceiver {
         String currentTime = new SimpleDateFormat("HH:mm").format(new Date());
         mBuilder.setContentText(currentTime);
 
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        Intent shareIntent = new Intent();
+
+        Intent notifIntent = new Intent(context,MainActivity.class);
+        shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_TEXT,"Sono le " + currentTime +", " + tipo + "\u2764");
         Intent shareIntentWithChooser = Intent.createChooser(shareIntent,"Send to");
+
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-//        stackBuilder.addParentStack(MainActivity.class);
-        stackBuilder.addNextIntent(shareIntentWithChooser);
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(notifIntent);
 
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntentShare = PendingIntent.getActivity(context,notificationId,shareIntentWithChooser,PendingIntent.FLAG_UPDATE_CURRENT);
 
-
-        mBuilder.addAction(R.drawable.ic_send_black_18dp,"Condividi",pendingIntent);
+        mBuilder.addAction(R.drawable.ic_send_black_18dp,"Condividi",pendingIntentShare);
 
         mBuilder.setContentIntent(pendingIntent);
         Notification notification = mBuilder.build();
