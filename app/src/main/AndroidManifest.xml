@@ -26,8 +26,8 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="com.tomorrow.magicleon.spasmotime.ALARM_PALINDROM"/>
-                <action android:name="com.tomorrow.magicleon.spasmotime.ALARM_SYMMETRIC"/>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+                <action android:name="com.tomorrow.magicleon.spasmotime.ALARM_DOUBLE"/>
+                <action android:name="com.tomorrow.magicleon.spasmotime.ALARM_TRIPLE"/>
             </intent-filter>
         </receiver>
 

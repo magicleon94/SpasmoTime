@@ -4,6 +4,7 @@
     <string name="orari_doppi">Orari doppi</string>
     <string name="sharedPreferencePalindromEnabledKey">com.tomorrow.magicleon.spasmotime.PALINDROM_ENABLED_KEY</string>
     <string name="sharedPreferenceDoubleEnabledKey">com.tomorrow.magicleon.spasmotime.DOUBLE_ENABLED_KEY</string>
+    <string name="sharedPreferenceTripleEnabledKey">com.tomorrow.magicleon.spasmotime.TRIPLE_ENABLED_KEY</string>
     <string name="sharedPreferences">com.tomorrow.magicleon.spasmotime.SHARED_PREFERENCES_FILE</string>
     <string name="orari_tripli">Orari tripli</string>
 </resources>

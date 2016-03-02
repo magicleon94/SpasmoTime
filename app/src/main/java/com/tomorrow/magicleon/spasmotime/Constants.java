@@ -9,7 +9,10 @@ public class Constants {
     public static final String ALARM_ACTION_PALINDROM = "com.tomorrow.magicleon.spasmotime.ALARM_PALINDROM";
 
     //messaggio da sparare con l'alarm per i doppi
-    public static final String ALARM_ACTION_DOUBLE = "com.tomorrow.magicleon.spasmotime.ALARM_SYMMETRIC";
+    public static final String ALARM_ACTION_DOUBLE = "com.tomorrow.magicleon.spasmotime.ALARM_DOUBLE";
+
+    //messaggio da sparare con l'alarm per i tripli
+    public static final String ALARM_ACTION_TRIPLE = "com.tomorrow.magicleon.spasmotime.ALARM_TRIPLE";
 
     //avvia il service, probabilmente è inutile
     public static final String SERVICE_START_ACTION = "com.tomorrow.magicleon.spasmotime.START_SERVICE";
@@ -20,10 +23,15 @@ public class Constants {
 
 
     //extras per il service
-    public static final String SWITCH_PALINDROMS_EXTRA = "com.tomorrow.magicleon.spasmotime.PALINDROMS_EXTRA";
-    public static final String SWITCH_SYMMETRIC_EXTRA = "com.tomorrow.magicleon.spasmotime.SYMMETRIC_EXTRA";
+    public static final String SWITCH_VALUE_EXTRA = "com.tomorrow.magicleon.spasmotime.VALUE_EXTRA";
+
 
     //Ora e minuto da mettere nell'intent
     public static final String HOUR_EXTRA = "com.tomorrow.magicleon.spasmotime.HOUR_EXTRA";
     public static final String MINUTE_EXTRA = "com.tomorrow.magicleon.spasmotime.MINUTE_EXTRA";
+
+    //Identificare l'opzione che è cambiata
+    public static final String PALINDROMS_CHANGED_ACTION = "com.tomorrow.magicleon.spasmotime.PALINDROM_CHANGED_ACTION";
+    public static final String DOUBLE_CHANGED_ACTION = "com.tomorrow.magicleon.spasmotime.DOUBLE_CHANGED_ACTION";
+    public static final String TRIPLE_CHANGED_ACTION = "com.tomorrow.magicleon.spasmotime.TRIPLE_CHANGED_ACTION";
 }

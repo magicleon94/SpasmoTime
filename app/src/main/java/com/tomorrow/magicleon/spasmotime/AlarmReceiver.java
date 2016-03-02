@@ -28,10 +28,18 @@ public class AlarmReceiver extends BroadcastReceiver {
         if(intent.getAction().equals(Constants.ALARM_ACTION_DOUBLE)){
             tipo="doppio";
         }
+        if(intent.getAction().equals(Constants.ALARM_ACTION_TRIPLE)){
+            tipo="triplo";
+        }
 
         mBuilder.setContentTitle("Orario " + tipo + "!");
 
-        String currentTime = String.valueOf(intent.getIntExtra(Constants.HOUR_EXTRA,0)) + ":" + String.valueOf(intent.getIntExtra(Constants.MINUTE_EXTRA,0));
+        int hours = intent.getIntExtra(Constants.HOUR_EXTRA,0);
+        int minutes = intent.getIntExtra(Constants.MINUTE_EXTRA,0);
+        String hoursString = (hours<10) ? "0" + String.valueOf(hours) : String.valueOf(hours);
+        String minutesString = (minutes<10) ? "0" + String.valueOf(minutes) : String.valueOf(minutes);
+
+        String currentTime = hoursString + ":" + minutesString;
         mBuilder.setContentText(currentTime);
 
         Intent shareIntent = new Intent();
@@ -52,6 +60,10 @@ public class AlarmReceiver extends BroadcastReceiver {
         mBuilder.addAction(R.drawable.ic_send_black_18dp,"Condividi",pendingIntentShare);
 
         mBuilder.setContentIntent(pendingIntent);
+        mBuilder.setDefaults(Notification.DEFAULT_SOUND);
+        mBuilder.setDefaults(Notification.DEFAULT_VIBRATE);
+        mBuilder.setDefaults(Notification.DEFAULT_LIGHTS);
+
         Notification notification = mBuilder.build();
         notification.flags = Notification.DEFAULT_LIGHTS|Notification.FLAG_AUTO_CANCEL;
 
