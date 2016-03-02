@@ -29,13 +29,15 @@ import java.util.Calendar;
 
         try {
             if (palindromi) {
-                Intent palindroIntent = new Intent(Constants.ALARM_ACTION_PALINDROM);
                 clearAlarmFor(alarmManager,Constants.ALARM_ACTION_PALINDROM);
 
                 spasmoTime = Calendar.getInstance();
                 spasmoTime.set(Calendar.SECOND,0);
                 for(int i=0; i<24; i++){
                     if(i<6 || (i>=10 && i<=15)  || i>=20) {
+                        Intent palindroIntent = new Intent(Constants.ALARM_ACTION_PALINDROM);
+                        palindroIntent.putExtra(Constants.HOUR_EXTRA,i);
+                        palindroIntent.putExtra(Constants.MINUTE_EXTRA,reverseInt(i));
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), i, palindroIntent, 0);
                         spasmoTime.set(Calendar.HOUR_OF_DAY, i);
                         spasmoTime.set(Calendar.MINUTE, reverseInt(i));
@@ -56,12 +58,14 @@ import java.util.Calendar;
 
             if (doppi) {
 
-                Intent doubleIntent = new Intent(Constants.ALARM_ACTION_DOUBLE);
                 clearAlarmFor(alarmManager,Constants.ALARM_ACTION_DOUBLE);
                 spasmoTime = Calendar.getInstance();
                 spasmoTime.set(Calendar.SECOND,0);
 
                 for(int i=0; i<24; i++){
+                    Intent doubleIntent = new Intent(Constants.ALARM_ACTION_DOUBLE);
+                    doubleIntent.putExtra(Constants.HOUR_EXTRA,i);
+                    doubleIntent.putExtra(Constants.MINUTE_EXTRA,i);
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), i, doubleIntent, 0);
                     spasmoTime.set(Calendar.HOUR_OF_DAY,i);
                     spasmoTime.set(Calendar.MINUTE,i);

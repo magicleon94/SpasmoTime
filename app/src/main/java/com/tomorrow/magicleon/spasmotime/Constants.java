@@ -22,4 +22,8 @@ public class Constants {
     //extras per il service
     public static final String SWITCH_PALINDROMS_EXTRA = "com.tomorrow.magicleon.spasmotime.PALINDROMS_EXTRA";
     public static final String SWITCH_SYMMETRIC_EXTRA = "com.tomorrow.magicleon.spasmotime.SYMMETRIC_EXTRA";
+
+    //Ora e minuto da mettere nell'intent
+    public static final String HOUR_EXTRA = "com.tomorrow.magicleon.spasmotime.HOUR_EXTRA";
+    public static final String MINUTE_EXTRA = "com.tomorrow.magicleon.spasmotime.MINUTE_EXTRA";
 }

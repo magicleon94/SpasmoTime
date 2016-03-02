@@ -19,7 +19,6 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("AlarmReceiver","ricevuto " + intent.getAction());
-        Calendar calendar = Calendar.getInstance();
         String tipo = "sconosciuto";
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
         mBuilder.setSmallIcon(R.drawable.ic_flag_black_24dp);
@@ -27,12 +26,12 @@ public class AlarmReceiver extends BroadcastReceiver {
             tipo="palindromo";
         }
         if(intent.getAction().equals(Constants.ALARM_ACTION_DOUBLE)){
-            tipo="simmetrico";
+            tipo="doppio";
         }
 
         mBuilder.setContentTitle("Orario " + tipo + "!");
 
-        String currentTime = new SimpleDateFormat("HH:mm").format(new Date());
+        String currentTime = String.valueOf(intent.getIntExtra(Constants.HOUR_EXTRA,0)) + ":" + String.valueOf(intent.getIntExtra(Constants.MINUTE_EXTRA,0));
         mBuilder.setContentText(currentTime);
 
         Intent shareIntent = new Intent();
