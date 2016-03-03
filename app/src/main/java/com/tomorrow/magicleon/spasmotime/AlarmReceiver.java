@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
@@ -60,15 +61,24 @@ public class AlarmReceiver extends BroadcastReceiver {
         mBuilder.addAction(R.drawable.ic_send_black_18dp,"Condividi",pendingIntentShare);
 
         mBuilder.setContentIntent(pendingIntent);
-        mBuilder.setDefaults(Notification.DEFAULT_SOUND);
-        mBuilder.setDefaults(Notification.DEFAULT_VIBRATE);
-        mBuilder.setDefaults(Notification.DEFAULT_LIGHTS);
+//        mBuilder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS);
 
         Notification notification = mBuilder.build();
-        notification.flags = Notification.DEFAULT_LIGHTS|Notification.FLAG_AUTO_CANCEL;
-
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notification.flags = Notification.FLAG_AUTO_CANCEL | Notification.FLAG_ONLY_ALERT_ONCE;
+        notification.defaults = Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS;
+        final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notificationId,notification);
+
+        //cancella la notifica quando l'orario è passato
+        Handler handler = new Handler();
+        long delay = 60*1000;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                notificationManager.cancel(notificationId);
+            }
+        },delay);
+
         notificationId++;
     }
 

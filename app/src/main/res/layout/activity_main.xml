@@ -48,4 +48,43 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#000000"/>
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/orari_a_scala"
+        android:textSize="20sp"
+        android:id="@+id/stairAscSwitch"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"/>
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/orari_a_scala_decrescente"
+        android:textSize="20sp"
+        android:id="@+id/stairDescSwitch"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"/>
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/data_uguale_a_orario_doppio"
+        android:textSize="20sp"
+        android:id="@+id/matchDateSwitch"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"/>
 </LinearLayout>

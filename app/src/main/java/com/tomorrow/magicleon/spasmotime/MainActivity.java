@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         //carico i valori di checked precedentemente impostati
         palindromi.setChecked(sharedPreferences.getBoolean(getString(R.string.sharedPreferencePalindromEnabledKey),false));
         doppi.setChecked(sharedPreferences.getBoolean(getString(R.string.sharedPreferenceDoubleEnabledKey),false));
-
+        tripli.setChecked(sharedPreferences.getBoolean(getString(R.string.sharedPreferenceTripleEnabledKey),false));
         palindromi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
