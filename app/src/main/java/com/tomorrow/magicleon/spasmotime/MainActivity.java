@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.commit();
 
                 intent = new Intent(getApplicationContext(),updateAlarmsService.class);
-                intent.setAction(Constants.ALARM_ACTION_DOUBLE);
+                intent.setAction(Constants.DOUBLE_CHANGED_ACTION);
                 intent.putExtra(Constants.SWITCH_VALUE_EXTRA,isChecked);
                 startService(intent);
             }

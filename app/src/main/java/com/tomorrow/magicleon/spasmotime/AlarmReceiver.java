@@ -61,7 +61,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         mBuilder.addAction(R.drawable.ic_send_black_18dp,"Condividi",pendingIntentShare);
 
         mBuilder.setContentIntent(pendingIntent);
-//        mBuilder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS);
 
         Notification notification = mBuilder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL | Notification.FLAG_ONLY_ALERT_ONCE;
@@ -69,13 +68,17 @@ public class AlarmReceiver extends BroadcastReceiver {
         final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notificationId,notification);
 
+        Log.d("AlarmReveiver","id della notifica: " + String.valueOf(notificationId));
+
         //cancella la notifica quando l'orario è passato
         Handler handler = new Handler();
         long delay = 60*1000;
+        final int lullo = notificationId;
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                notificationManager.cancel(notificationId);
+                Log.d("Handler","id della notifica: " + String.valueOf(lullo));
+                notificationManager.cancel(lullo);
             }
         },delay);
 

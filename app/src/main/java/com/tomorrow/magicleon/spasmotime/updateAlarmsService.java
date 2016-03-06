@@ -20,6 +20,7 @@ import java.util.Date;
     protected void onHandleIntent(Intent intent) {
 
         AlarmManager alarmManager = ((AlarmManager) getApplicationContext().getSystemService(ALARM_SERVICE));
+        Log.d("RECEIVER","woke up because of " + intent.getAction());
         try {
             if(intent.getAction().equals(Constants.PALINDROMS_CHANGED_ACTION)){
                 boolean palindromi = intent.getBooleanExtra(Constants.SWITCH_VALUE_EXTRA,false);
@@ -91,8 +92,12 @@ import java.util.Date;
             Calendar spasmoTime = Calendar.getInstance();
             spasmoTime.set(Calendar.SECOND, 0);
             spasmoTime.set(Calendar.MILLISECOND,0);
+            boolean twentyFourHour = android.text.format.DateFormat.is24HourFormat(getApplicationContext());
+
+            Log.d(TAG,"Il sistema è a 24h? " + String.valueOf(twentyFourHour));
+//            Log.d(TAG,"Il tipo di azione richiesto è " + type);
             if(type.equals(Constants.PALINDROMS_CHANGED_ACTION)) {
-                if(android.text.format.DateFormat.is24HourFormat(getApplicationContext())){
+                if(twentyFourHour){
                     for (int i = 0; i < 24; i++) {
                         if (i < 6 || (i >= 10 && i <= 15) || i >= 20) {
                             Intent palindroIntent = new Intent(Constants.ALARM_ACTION_PALINDROM);
@@ -105,18 +110,18 @@ import java.util.Date;
                             if (spasmoTime.getTimeInMillis() < System.currentTimeMillis()) {
                                 spasmoTime.add(Calendar.DAY_OF_MONTH, 1);
                                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-//                                Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
+                                Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
                                 spasmoTime.add(Calendar.DAY_OF_MONTH, -1);
                             } else {
                                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-//                                Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
+                                Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
                             }
                         }
                     }
                 }else{
 
                     for(int i=0;i<13;i++){
-                        if((i>=0 && i<6) || i>10){
+                        if((i>=0 && i<6) || i>=10){
                             Intent palindroIntent = new Intent(Constants.ALARM_ACTION_PALINDROM);
                             palindroIntent.putExtra(Constants.HOUR_EXTRA, i);
                             palindroIntent.putExtra(Constants.MINUTE_EXTRA, reverseInt(i));
@@ -127,11 +132,11 @@ import java.util.Date;
                             if (spasmoTime.getTimeInMillis() < System.currentTimeMillis()) {
                                 spasmoTime.add(Calendar.DAY_OF_MONTH, 1);
                                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), AlarmManager.INTERVAL_HALF_DAY, pendingIntent);
-//                                Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
+                                Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
                                 spasmoTime.add(Calendar.DAY_OF_MONTH, -1);
                             } else {
                                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), AlarmManager.INTERVAL_HALF_DAY, pendingIntent);
-//                                Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
+                                Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
                             }
                         }
                     }
@@ -141,7 +146,7 @@ import java.util.Date;
             if(type.equals(Constants.DOUBLE_CHANGED_ACTION)){
 //                Calendar spasmoTime = Calendar.getInstance();
 //                spasmoTime.set(Calendar.SECOND,0);
-                if(android.text.format.DateFormat.is24HourFormat(getApplicationContext())) {
+                if(twentyFourHour) {
                     for (int i = 0; i < 24; i++) {
                         Intent doubleIntent = new Intent(Constants.ALARM_ACTION_DOUBLE);
                         doubleIntent.putExtra(Constants.HOUR_EXTRA, i);
@@ -153,11 +158,11 @@ import java.util.Date;
                         if (spasmoTime.getTimeInMillis() < System.currentTimeMillis()) {
                             spasmoTime.add(Calendar.DAY_OF_MONTH, 1);
                             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-//                            Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
+                            Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
                             spasmoTime.add(Calendar.DAY_OF_MONTH, -1);
                         } else {
                             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-//                            Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
+                            Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
                         }
                     }
                 }else{
@@ -172,26 +177,24 @@ import java.util.Date;
                         if (spasmoTime.getTimeInMillis() < System.currentTimeMillis()) {
                             spasmoTime.add(Calendar.DAY_OF_MONTH, 1);
                             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), AlarmManager.INTERVAL_HALF_DAY, pendingIntent);
-//                            Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
+                            Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
                             spasmoTime.add(Calendar.DAY_OF_MONTH, -1);
                         } else {
                             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), AlarmManager.INTERVAL_HALF_DAY, pendingIntent);
-//                            Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
+                            Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
                         }
                     }
                 }
-
-
             }
+
             if(type.equals(Constants.TRIPLE_CHANGED_ACTION)){
 //                    Calendar spasmoTime = Calendar.getInstance();
 //                    spasmoTime.set(Calendar.SECOND, 0);
-                    boolean twelveHours = android.text.format.DateFormat.is24HourFormat(getApplicationContext());
                     for (int i = 1; i <= 5; i++) {
                         Intent tripleIntent = new Intent(Constants.ALARM_ACTION_TRIPLE);
                         tripleIntent.putExtra(Constants.HOUR_EXTRA, i);
                         tripleIntent.putExtra(Constants.MINUTE_EXTRA, i + 10 * i);
-                        if(!twelveHours) {
+                        if(twentyFourHour) {
                             spasmoTime.set(Calendar.HOUR_OF_DAY, i);
                         }else{
                             spasmoTime.set(Calendar.HOUR, i);
@@ -201,20 +204,20 @@ import java.util.Date;
 
                         if (spasmoTime.getTimeInMillis() < System.currentTimeMillis()) {
                             spasmoTime.add(Calendar.DAY_OF_MONTH, 1);
-                            if(!twelveHours) {
+                            if(twentyFourHour) {
                                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
                             }else{
                                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), AlarmManager.INTERVAL_HALF_DAY, pendingIntent);
                             }
-//                            Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
+                            Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
                             spasmoTime.add(Calendar.DAY_OF_MONTH, -1);
                         } else {
-                            if(!twelveHours) {
+                            if(twentyFourHour) {
                                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
                             }else{
                                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, spasmoTime.getTimeInMillis(), AlarmManager.INTERVAL_HALF_DAY, pendingIntent);
                             }
-//                            Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
+                            Log.d(TAG, "Settato alarm alle " + spasmoTime.get(Calendar.HOUR_OF_DAY) + ":" + spasmoTime.get(Calendar.MINUTE) + ":" + spasmoTime.get(Calendar.SECOND) + " del " + spasmoTime.get(Calendar.DAY_OF_MONTH));
                         }
                     }
             }
