@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -13,8 +15,7 @@ public class MainActivity extends AppCompatActivity {
     Switch palindromi;
     Switch doppi;
     Switch tripli;
-    Switch scala_ascendente;
-    Switch scala_discendente;
+    Switch matchDate;
 
     SharedPreferences sharedPreferences;
     @Override
@@ -26,8 +27,7 @@ public class MainActivity extends AppCompatActivity {
         palindromi = (Switch) findViewById(R.id.palindromsSwitch);
         doppi = (Switch) findViewById(R.id.doubleSwitch);
         tripli = (Switch) findViewById(R.id.tripleSwitch);
-        scala_ascendente = (Switch) findViewById(R.id.stairAscSwitch);
-        scala_discendente = (Switch) findViewById(R.id.stairDescSwitch);
+        matchDate = (Switch) findViewById(R.id.matchDateSwitch);
 
         //mi prendo le sharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -36,8 +36,7 @@ public class MainActivity extends AppCompatActivity {
         palindromi.setChecked(sharedPreferences.getBoolean(getString(R.string.sharedPreferencePalindromEnabledKey),false));
         doppi.setChecked(sharedPreferences.getBoolean(getString(R.string.sharedPreferenceDoubleEnabledKey),false));
         tripli.setChecked(sharedPreferences.getBoolean(getString(R.string.sharedPreferenceTripleEnabledKey),false));
-        scala_ascendente.setChecked(sharedPreferences.getBoolean(getString(R.string.sharedPreferenceStairAscEnabledKey),false));
-        scala_discendente.setChecked(sharedPreferences.getBoolean(getString(R.string.sharedPreferenceStairDescEnabledKey),false));
+        matchDate.setChecked(sharedPreferences.getBoolean(getString(R.string.sharedPreferenceMatchDateEnabledKey),false));
 
         palindromi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -84,34 +83,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        scala_discendente.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        matchDate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean(getString(R.string.sharedPreferenceStairDescEnabledKey), isChecked);
+                editor.putBoolean(getString(R.string.sharedPreferenceMatchDateEnabledKey), isChecked);
                 editor.commit();
 
                 intent = new Intent(getApplicationContext(),updateAlarmsService.class);
-                intent.setAction(Constants.STAIR_DESC_CHANGED_ACTION);
+                intent.setAction(Constants.MATCH_DATE_CHANGED_ACTION);
                 intent.putExtra(Constants.SWITCH_VALUE_EXTRA,isChecked);
                 startService(intent);
             }
         });
 
-        scala_ascendente.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean(getString(R.string.sharedPreferenceStairAscEnabledKey), isChecked);
-                editor.commit();
-
-                intent = new Intent(getApplicationContext(),updateAlarmsService.class);
-                intent.setAction(Constants.STAIR_ASC_CHANGED_ACTION);
-                intent.putExtra(Constants.SWITCH_VALUE_EXTRA,isChecked);
-                startService(intent);
-            }
-        });
     }
 }

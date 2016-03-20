@@ -14,11 +14,8 @@ public class Constants {
     //messaggio da sparare con l'alarm per i tripli
     public static final String ALARM_ACTION_TRIPLE = "com.tomorrow.magicleon.spasmotime.ALARM_TRIPLE";
 
-    //messaggio da sparare con l'alarm per la scala decrescente
-    public static final String ALARM_ACTION_STAIR_DESC = "com.tomorrow.magicleon.spasmotime.ALARM_STAIR_DESC";
-
-    //messaggio da sparare con l'alarm per la scala crescente
-    public static final String ALARM_ACTION_STAIR_ASC = "com.tomorrow.magicleon.spasmotime.ALARM_STAIR_ASC";
+    //messaggio da sparare con l'alarm per orari corrispondenti alle date
+    public static final String ALARM_MATCH_DATE = "com.tomorrow.magicleon.spasmotime.ALARM_MATCH_DATE";
 
     //avvia il service, probabilmente è inutile
     public static final String SERVICE_START_ACTION = "com.tomorrow.magicleon.spasmotime.START_SERVICE";
@@ -38,6 +35,8 @@ public class Constants {
     public static final String PALINDROMS_CHANGED_ACTION = "com.tomorrow.magicleon.spasmotime.PALINDROM_CHANGED_ACTION";
     public static final String DOUBLE_CHANGED_ACTION = "com.tomorrow.magicleon.spasmotime.DOUBLE_CHANGED_ACTION";
     public static final String TRIPLE_CHANGED_ACTION = "com.tomorrow.magicleon.spasmotime.TRIPLE_CHANGED_ACTION";
-    public static final String STAIR_DESC_CHANGED_ACTION = "com.tomorrow.magicleon.spasmotime.STAIR_DESC_CHANGED_ACTION";
-    public static final String STAIR_ASC_CHANGED_ACTION = "com.tomorrow.magicleon.spasmotime.STAIR_ASC_CHANGED_ACTION";
+    public static final String MATCH_DATE_CHANGED_ACTION = "com.tomorrow.magicleon.spasmotime.MATCH_DATE_CHANGED_ACTION";
+
+
+    public static final String DELETE_ACTION = "com.tomorrow.magicleon.spasmotime.DELETE_ACTION";
 }

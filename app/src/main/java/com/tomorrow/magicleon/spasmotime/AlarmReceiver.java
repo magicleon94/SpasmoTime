@@ -16,27 +16,37 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class AlarmReceiver extends BroadcastReceiver {
-    static int notificationId = 0;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("AlarmReceiver","ricevuto " + intent.getAction());
         String tipo = "sconosciuto";
+        String action = intent.getAction();
+
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
         mBuilder.setSmallIcon(R.drawable.ic_flag_black_24dp);
-        if(intent.getAction().equals(Constants.ALARM_ACTION_PALINDROM)){
+
+        final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if(action.equals(Constants.ALARM_ACTION_PALINDROM)){
             tipo="palindromo";
         }
-        if(intent.getAction().equals(Constants.ALARM_ACTION_DOUBLE)){
+        int hours = intent.getIntExtra(Constants.HOUR_EXTRA,0);
+        int minutes = intent.getIntExtra(Constants.MINUTE_EXTRA,0);
+
+        if(action.equals(Constants.ALARM_ACTION_DOUBLE)){
             tipo="doppio";
         }
-        if(intent.getAction().equals(Constants.ALARM_ACTION_TRIPLE)){
+        if(action.equals(Constants.ALARM_ACTION_TRIPLE)){
             tipo="triplo";
+        }
+        if(action.equals(Constants.DELETE_ACTION)){
+            notificationManager.cancelAll();
+            return;
         }
 
         mBuilder.setContentTitle("Orario " + tipo + "!");
 
-        int hours = intent.getIntExtra(Constants.HOUR_EXTRA,0);
-        int minutes = intent.getIntExtra(Constants.MINUTE_EXTRA,0);
         String hoursString = (hours<10) ? "0" + String.valueOf(hours) : String.valueOf(hours);
         String minutesString = (minutes<10) ? "0" + String.valueOf(minutes) : String.valueOf(minutes);
 
@@ -56,7 +66,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         stackBuilder.addNextIntent(notifIntent);
 
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent pendingIntentShare = PendingIntent.getActivity(context,notificationId,shareIntentWithChooser,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntentShare = PendingIntent.getActivity(context,0,shareIntentWithChooser,PendingIntent.FLAG_UPDATE_CURRENT);
 
         mBuilder.addAction(R.drawable.ic_send_black_18dp,"Condividi",pendingIntentShare);
 
@@ -65,24 +75,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         Notification notification = mBuilder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL | Notification.FLAG_ONLY_ALERT_ONCE;
         notification.defaults = Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS;
-        final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(notificationId,notification);
+        notificationManager.notify(0,notification);
 
-        Log.d("AlarmReveiver","id della notifica: " + String.valueOf(notificationId));
-
-        //cancella la notifica quando l'orario è passato
-        Handler handler = new Handler();
-        long delay = 60*1000;
-        final int lullo = notificationId;
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Log.d("Handler","id della notifica: " + String.valueOf(lullo));
-                notificationManager.cancel(lullo);
-            }
-        },delay);
-
-        notificationId++;
+        Log.d("AlarmReveiver","id della notifica: " + String.valueOf(0));
     }
 
 

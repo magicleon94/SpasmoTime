@@ -5,9 +5,7 @@
     <string name="sharedPreferencePalindromEnabledKey">com.tomorrow.magicleon.spasmotime.PALINDROM_ENABLED_KEY</string>
     <string name="sharedPreferenceDoubleEnabledKey">com.tomorrow.magicleon.spasmotime.DOUBLE_ENABLED_KEY</string>
     <string name="sharedPreferenceTripleEnabledKey">com.tomorrow.magicleon.spasmotime.TRIPLE_ENABLED_KEY</string>
-    <string name="sharedPreferenceStairAscEnabledKey">com.tomorrow.magicleon.spasmotime.STAIR_ASC_ENABLED_KEY</string>
-    <string name="sharedPreferenceStairDescEnabledKey">com.tomorrow.magicleon.spasmotime.STAIR_DESC_ENABLED_KEY</string>
-
+    <string name="sharedPreferenceMatchDateEnabledKey">com.tomorrow.magicleon.spasmotime.MATCH_DATE_ENABLED_KEY</string>
 
     <string name="sharedPreferences">com.tomorrow.magicleon.spasmotime.SHARED_PREFERENCES_FILE</string>
     <string name="orari_tripli">Orari tripli</string>
